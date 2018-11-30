@@ -1,10 +1,10 @@
 function myFunction() {
   var prop = PropertiesService.getScriptProperties().getProperties();
-  var space_id = "hands-lab";
+  var space_id = "hands-lab"; // your space id
   var domain = "backlog.jp"; // or backlog.com
   var backlog_url = "https://" + space_id +"."+ domain;
   var api_key = prop.backlog_api_key; 
-  var project_ids = ["DEV_PORTAL"];
+  var project_ids = ["DEV_PORTAL"]; // your project ids
 
   for (var i in project_ids) {
     var wiki_json = getBacklogWiki(backlog_url, api_key, project_ids[i]);
