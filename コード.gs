@@ -31,8 +31,15 @@ function createGsheetSheet(sheet_name){
 
 function writeGsheet(gsheet_url, wiki_json, project_id, backlog_url) {
   var spreadsheet = SpreadsheetApp.openByUrl(gsheet_url);
-  spreadsheet.insertSheet(project_id, 0);
-  var sheet = spreadsheet.getSheetByName(project_id).activate();
+  var sheet = spreadsheet.getSheetByName(project_id);
+  if (sheet != null) {
+    sheet.activate();
+  } else {
+    spreadsheet.insertSheet(project_id, 0);
+    sheet = spreadsheet.getSheetByName(project_id).activate();
+  }
+  sheet.clear();
+  
   var cell = sheet.getActiveCell();
   
   cell.offset(0, 0).setValue('url').setBackground("#FFFFE0");// LightYellow
@@ -46,7 +53,7 @@ function writeGsheet(gsheet_url, wiki_json, project_id, backlog_url) {
     cell.offset(i_, 2).setValue(wiki_json[i].updated);
   }
   
-  // 1行目と1列目を固定
+  // 1行目を固定
   sheet.setFrozenRows(1);
   
   // リサイズ
